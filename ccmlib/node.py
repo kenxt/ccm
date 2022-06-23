@@ -47,6 +47,7 @@ from six.moves import xrange
 logger = logging.getLogger(__name__)
 
 NODE_WAIT_TIMEOUT_IN_SECS = 90
+DEFAULT_UPDATE_PID_TIMEOUT_IN_SECS = int(os.environ.get('CCM_UPDATE_PID_DEFAULT_TIMEOUT', 30))
 
 class Status():
     UNINITIALIZED = "UNINITIALIZED"
@@ -2181,8 +2182,9 @@ class Node(object):
 
         start = time.time()
         while not (os.path.isfile(pidfile) and os.stat(pidfile).st_size > 0):
-            if (time.time() - start > 30.0):
-                common.error("Timed out waiting for pidfile to be filled (current time is {}, file exists {})".format(datetime.now(), os.path.isfile(pidfile)))
+            if time.time() - start > DEFAULT_UPDATE_PID_TIMEOUT_IN_SECS:
+                common.error("Timed out waiting for pidfile to be filled (timeout is {}, current time is {}, file exists {})"
+                             .format(DEFAULT_UPDATE_PID_TIMEOUT_IN_SECS, datetime.now(), os.path.isfile(pidfile)))
                 break
             else:
                 time.sleep(0.1)
