@@ -20,7 +20,6 @@ import os
 import sys
 import warnings
 
-import pkg_resources
 from six import print_
 
 from ccmlib import common
@@ -28,6 +27,14 @@ from ccmlib.cmds import cluster_cmds, node_cmds
 from ccmlib.cmds.common import get_command
 from ccmlib.remote import (PARAMIKO_IS_AVAILABLE, execute_ccm_remotely,
                            get_remote_options, get_remote_usage)
+
+try:  # Python 3.8+
+    from importlib.metadata import entry_points
+except ImportError:  # pragma: no cover - fallback for older Pythons
+    try:
+        from importlib_metadata import entry_points  # type: ignore
+    except ImportError:
+        entry_points = None
 
 
 def print_subcommand_usage(kind):
@@ -58,7 +65,23 @@ def print_global_usage():
     exit(1)
 
 
-for entry_point in pkg_resources.iter_entry_points(group='ccm_extension'):
+def _iter_ccm_extension_entry_points():
+    if entry_points is None:
+        warnings.warn("importlib.metadata not available; skipping ccm_extension entry points")
+        return []
+
+    eps = entry_points()
+
+    if hasattr(eps, 'select'):  # modern importlib.metadata
+        return eps.select(group='ccm_extension')
+
+    if isinstance(eps, dict):  # older importlib_metadata returns dict
+        return eps.get('ccm_extension', [])
+
+    return [ep for ep in eps if getattr(ep, 'group', None) == 'ccm_extension']
+
+
+for entry_point in _iter_ccm_extension_entry_points():
     entry_point.load()()
 
 common.check_win_requirements()

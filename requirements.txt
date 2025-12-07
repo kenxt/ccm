@@ -19,3 +19,4 @@ pyYaml; python_version >= '3'
 six >=1.4.1
 psutil
 packaging<21
+importlib_metadata>=0.23; python_version < '3.8'
