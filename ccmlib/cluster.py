@@ -28,7 +28,7 @@ import subprocess
 import threading
 import time
 from collections import OrderedDict, defaultdict, namedtuple
-from distutils.version import LooseVersion #pylint: disable=import-error, no-name-in-module
+from ccmlib.version import LooseVersion
 
 import yaml
 from six import print_

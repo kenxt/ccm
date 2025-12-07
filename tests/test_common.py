@@ -18,7 +18,7 @@
 import unittest
 from mock import patch
 
-from distutils.version import LooseVersion
+from ccmlib.version import LooseVersion
 
 from ccmlib import common
 from . import ccmtest

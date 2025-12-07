@@ -18,4 +18,4 @@ pyYaml<5.4; python_version < '3'
 pyYaml; python_version >= '3'
 six >=1.4.1
 psutil
-
+packaging<21

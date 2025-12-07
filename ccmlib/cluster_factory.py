@@ -24,8 +24,7 @@ import yaml
 
 from ccmlib import common, extension, repository
 from ccmlib.node import Node
-
-from distutils.version import LooseVersion  #pylint: disable=import-error, no-name-in-module
+from ccmlib.version import LooseVersion
 
 class ClusterFactory():
 

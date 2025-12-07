@@ -29,8 +29,8 @@ import ccmlib
 from ccmlib.cluster import Cluster
 from ccmlib.common import _update_java_version, get_supported_jdk_versions_from_dist, get_supported_jdk_versions, get_available_jdk_versions
 from ccmlib.node import NodeError
+from ccmlib.version import LooseVersion
 from . import TEST_DIR, ccmtest
-from distutils.version import LooseVersion  # pylint: disable=import-error, no-name-in-module
 
 sys.path = [".."] + sys.path
 

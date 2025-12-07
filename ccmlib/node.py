@@ -35,7 +35,7 @@ import time
 import warnings
 from collections import namedtuple
 from datetime import datetime
-from distutils.version import LooseVersion  #pylint: disable=import-error, no-name-in-module
+from ccmlib.version import LooseVersion
 
 import yaml
 from six import print_, string_types

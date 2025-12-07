@@ -35,7 +35,7 @@ import subprocess
 import sys
 import time
 import yaml
-from distutils.version import LooseVersion  #pylint: disable=import-error, no-name-in-module
+from ccmlib.version import LooseVersion
 from six import print_
 
 from ccmlib import extension
